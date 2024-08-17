@@ -21,4 +21,4 @@ wait-db:
 	until docker compose exec -T postgres pg_isready --timeout=0 --dbname=soft-catalog ; do sleep 1 ; done
 
 migrate-app:
-	docker compose run --rm php-cli ./bin/console doctrine:migrations:migrate --no-interaction
+	docker compose exec php-cli ./bin/console doctrine:migrations:migrate --no-interaction
