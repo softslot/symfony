@@ -21,4 +21,10 @@ class SecurityController extends AbstractController
             'error' => $this->authenticationUtils->getLastAuthenticationError(),
         ]);
     }
+
+    #[Route('/logout', name: 'app_logout')]
+    public function logout()
+    {
+        throw new \Exception('logout() should never be reached');
+    }
 }

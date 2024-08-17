@@ -3,30 +3,37 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
-class User implements UserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(name: 'id')]
     private ?int $id = null;
 
-    #[ORM\Column(length: 180)]
-    private ?string $email = null;
+    #[ORM\Column(name: 'email', length: 180, nullable: false)]
+    private string $email;
 
     /**
-     * @var list<string> The user roles
+     * @var string[]
      */
-    #[ORM\Column]
+    #[ORM\Column(name: 'roles', type: Types::JSON)]
     private array $roles = [];
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(name: 'first_name',length: 255, nullable: true)]
     private ?string $firstName = null;
+
+    #[ORM\Column(name: 'password', length: 255, nullable: false)]
+    private string $password;
+
+    private ?string $plainPassword = null;
 
     public function getId(): ?int
     {
@@ -46,8 +53,6 @@ class User implements UserInterface
     }
 
     /**
-     * A visual identifier that represents this user.
-     *
      * @see UserInterface
      */
     public function getUserIdentifier(): string
@@ -58,7 +63,7 @@ class User implements UserInterface
     /**
      * @see UserInterface
      *
-     * @return list<string>
+     * @return string[]
      */
     public function getRoles(): array
     {
@@ -70,7 +75,7 @@ class User implements UserInterface
     }
 
     /**
-     * @param list<string> $roles
+     * @param string[] $roles
      */
     public function setRoles(array $roles): static
     {
@@ -84,8 +89,7 @@ class User implements UserInterface
      */
     public function eraseCredentials(): void
     {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        $this->plainPassword = null;
     }
 
     public function getFirstName(): ?string
@@ -96,6 +100,30 @@ class User implements UserInterface
     public function setFirstName(?string $firstName): static
     {
         $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(?string $password): static
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(string $plainPassword): static
+    {
+        $this->plainPassword = $plainPassword;
 
         return $this;
     }
