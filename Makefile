@@ -1,4 +1,4 @@
-init-project: docker-down-clear docker-pull docker-build docker-up composer-install migrate-app
+init-project: docker-down-clear docker-pull docker-build docker-up composer-install migrate-app tailwind
 
 docker-down-clear:
 	docker compose down -v --remove-orphans
@@ -22,3 +22,6 @@ wait-db:
 
 migrate-app:
 	docker compose exec php-cli ./bin/console doctrine:migrations:migrate --no-interaction
+
+tailwind:
+	docker compose exec php-cli ./bin/console tailwind:build -w
