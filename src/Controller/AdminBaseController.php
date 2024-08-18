@@ -14,9 +14,6 @@ class AdminBaseController extends BaseController
     #[Route(path: '/admin', name: 'admin', methods: ['GET'])]
     public function dashboard(): JsonResponse
     {
-        $a = 1;
-        $b = 2;
-
         return new JsonResponse([]);
     }
 }

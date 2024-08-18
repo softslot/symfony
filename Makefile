@@ -1,4 +1,4 @@
-init-project: docker-down-clear docker-pull docker-build docker-up composer-install migrate-app tailwind
+init-project: docker-down-clear docker-pull docker-build docker-up composer-install migrate-app fixtures-load tailwind
 
 docker-down-clear:
 	docker compose down -v --remove-orphans
@@ -25,3 +25,6 @@ migrate-app:
 
 tailwind:
 	docker compose exec php-cli ./bin/console tailwind:build -w
+
+fixtures-load:
+	docker compose exec php-cli ./bin/console doctrine:fixtures:load -n
