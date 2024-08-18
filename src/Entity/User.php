@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -16,9 +17,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(name: 'id')]
+    #[Groups(['user:read'])]
     private ?int $id = null;
 
     #[ORM\Column(name: 'email', length: 180, nullable: false)]
+    #[Groups(['user:read'])]
     private string $email;
 
     /**
@@ -28,6 +31,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private array $roles = [];
 
     #[ORM\Column(name: 'first_name',length: 255, nullable: true)]
+    #[Groups(['user:read'])]
     private ?string $firstName = null;
 
     #[ORM\Column(name: 'password', length: 255, nullable: false)]

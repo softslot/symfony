@@ -14,6 +14,8 @@ class UserBaseController extends BaseController
     #[Route('/api/me', name: 'api_me', methods: ['GET'])]
     public function apiMe(): JsonResponse
     {
-        return $this->json($this->getUser());
+        return $this->json($this->getUser(), 200, [], [
+            'groups' => 'user:read',
+        ]);
     }
 }
