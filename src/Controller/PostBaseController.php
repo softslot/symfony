@@ -5,7 +5,7 @@ namespace App\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
 
-class PostController extends Controller
+class PostBaseController extends BaseController
 {
     #[Route('/post', name: 'app_post')]
     public function index(): JsonResponse

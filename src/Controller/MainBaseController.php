@@ -10,7 +10,7 @@ use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[AsController]
-class MainController extends Controller
+class MainBaseController extends BaseController
 {
     public function __construct(
         private readonly LoggerInterface $logger,

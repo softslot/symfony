@@ -9,7 +9,7 @@ use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[AsController]
-class AdminController extends Controller
+class AdminBaseController extends BaseController
 {
     #[Route(path: '/admin', name: 'admin', methods: ['GET'])]
     public function dashboard(): JsonResponse
